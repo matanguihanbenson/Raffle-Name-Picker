@@ -4,11 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Raffle Name Picker</title>
-    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="styles.css" />
   </head>
-  <body
-    class="flex items-center justify-center min-h-screen bg-gray-900 text-gray-200"
-  >
+  <body class="flex items-center justify-center min-h-screen bg-gray-900 text-gray-200">
     <div class="w-[50%] px-6">
       <h1 class="text-3xl font-bold text-center text-cyan-400 mb-6">
         🎉 Raffle Name Picker 🎉
@@ -18,20 +16,14 @@
         <!-- Winner Display -->
         <div class="relative text-center">
           <div class="absolute w-full -top-4 left-0 text-center">
-            <strong
-              class="bg-blue-700 text-white px-4 py-2 rounded-full text-lg shadow-md"
-            >
+            <strong class="bg-blue-700 text-white px-4 py-2 rounded-full text-lg shadow-md">
               The winner is:
             </strong>
           </div>
-          <div
-            id="winner"
-            class="h-[300px] bg-gradient-to-tr from-blue-700 to-pink-600 text-white text-lg font-bold p-6 rounded-lg flex flex-col items-center justify-center space-y-2 shadow-inner"
-          >
-
-          <div class="flicker" id="flicker"></div>
-        </div>
-          
+          <div id="winner" class="h-[300px] bg-gradient-to-tr from-blue-700 to-pink-600 text-white text-lg font-bold p-6 rounded-lg flex flex-col items-center justify-center space-y-2 shadow-inner">
+            <!-- Flicker animation element -->
+            <div id="flicker" class="hidden"></div>
+          </div>
         </div>
 
         <!-- Buttons -->
@@ -53,96 +45,97 @@
     </div>
 
     <script>
-      const names = []; // This will store the names from the server
+      document.addEventListener("DOMContentLoaded", function () {
+        const names = []; // This will store the names from the server
 
-      // Fetch names from the server when the page loads
-      fetch("/pick-winner?get-names=true")
-        .then((response) => response.json())
-        .then((data) => {
-          // Store the list of names (including other details)
-          names.push(...data.names);
-          console.log("Names loaded:", names);
-        })
-        .catch((error) => console.error("Error fetching names:", error));
-
-      // Function to simulate matrix-style flickering
-      function startFlickering() {
-        const flickerElement = document.getElementById("flicker");
-        let intervalId;
-
-        // Start flickering random names every 100ms
-        intervalId = setInterval(() => {
-          const randomName = names[Math.floor(Math.random() * names.length)];
-          flickerElement.innerHTML = `<span>${randomName.firstName} ${randomName.lastName}</span>`;
-        }, 100);
-
-        // Stop flickering after 3 seconds and display the winner
-        setTimeout(() => {
-          clearInterval(intervalId);
-
-          // Fetch the winner from the server
-          fetch("/pick-winner")
-            .then((response) => response.json())
-            .then((data) => {
-              if (data.message === "All participants have already won.") {
-                // Display the "All participants have already won" message
-                document.getElementById("winner").innerHTML =
-                  "<strong>All participants have already won.</strong>";
-                document.getElementById("flicker").style.display = "none";
-              } else {
-                const finalWinner = data.winner;
-                console.log("Winner picked:", finalWinner);
-                // Display the winner's information
-                document.getElementById("winner").innerHTML = `
-                                
-            <h1 class="text-4xl font-black leading-none">${finalWinner["LAST NAME"]}, ${finalWinner["FIRST NAME"]} ${finalWinner["MIDDLE INITIAL"]}.</h1>
-            <h2 class="text-2xl font-medium leading-none">${finalWinner["SCHOOL"]}</h2>
-            <h3 class="text-lg font-light leading-none">${finalWinner["ADDRESS"]}</h3>
-                            `;
-
-                // Hide the flickering element after the winner is displayed
-                document.getElementById("flicker").style.display = "none";
-              }
-            })
-            .catch((error) => console.error("Error fetching winner:", error));
-        }, 3000);
-      }
-
-      // Button event listener to start the selection process
-      document
-        .getElementById("pickWinnerButton")
-        .addEventListener("click", () => {
-          document.getElementById("winner").textContent = ""; // Clear previous winner
-          document.getElementById("flicker").style.display = "block"; // Show the flickering animation
-          startFlickering();
-        });
-
-      document
-        .getElementById("resetButton")
-        .addEventListener("click", function () {
-          fetch("/reset-winners", {
-            method: "POST",
+        // Fetch names from the server when the page loads
+        fetch("/pick-winner?get-names=true")
+          .then((response) => response.json())
+          .then((data) => {
+            // Store the list of names (including other details)
+            names.push(...data.names);
+            console.log("Names loaded:", names);
           })
-            .then((response) => {
-              if (!response.ok) {
-                return response.text().then((text) => {
-                  throw new Error(text);
-                });
-              }
-              return response.json();
+          .catch((error) => console.error("Error fetching names:", error));
+
+        // Function to simulate matrix-style flickering
+        function startFlickering() {
+          const flickerElement = document.getElementById("flicker");
+          let intervalId;
+
+          // Start flickering random names every 100ms
+          intervalId = setInterval(() => {
+            const randomName = names[Math.floor(Math.random() * names.length)];
+            flickerElement.innerHTML = `<span>${randomName.firstName} ${randomName.lastName}</span>`;
+          }, 100);
+
+          // Stop flickering after 3 seconds and display the winner
+          setTimeout(() => {
+            clearInterval(intervalId);
+
+            // Fetch the winner from the server
+            fetch("/pick-winner")
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.message === "All participants have already won.") {
+                  // Display the "All participants have already won" message
+                  document.getElementById("winner").innerHTML =
+                    "<strong>All participants have already won.</strong>";
+                  document.getElementById("flicker").style.display = "none";
+                } else {
+                  const finalWinner = data.winner;
+                  console.log("Winner picked:", finalWinner);
+                  // Display the winner's information
+                  document.getElementById("winner").innerHTML = `
+                    <h1 class="text-4xl font-black leading-none">${finalWinner["LAST NAME"]}, ${finalWinner["FIRST NAME"]} ${finalWinner["MIDDLE INITIAL"]}.</h1>
+                    <h2 class="text-2xl font-medium leading-none">${finalWinner["SCHOOL"]}</h2>
+                    <h3 class="text-lg font-light leading-none">${finalWinner["ADDRESS"]}</h3>
+                  `;
+                  // Hide the flickering element after the winner is displayed
+                  document.getElementById("flicker").style.display = "none";
+                }
+              })
+              .catch((error) => console.error("Error fetching winner:", error));
+          }, 3000);
+        }
+
+        // Button event listener to start the selection process
+        document
+          .getElementById("pickWinnerButton")
+          .addEventListener("click", () => {
+            document.getElementById("winner").textContent = ""; // Clear previous winner
+            document.getElementById("flicker").style.display = "block"; // Show the flickering animation
+            startFlickering();
+          });
+
+        // Reset button functionality
+        document
+          .getElementById("resetButton")
+          .addEventListener("click", function () {
+            fetch("/reset-winners", {
+              method: "POST",
             })
-            .then((data) => {
-              if (data.success) {
-                alert("Winners have been reset!");
-              } else {
+              .then((response) => {
+                if (!response.ok) {
+                  return response.text().then((text) => {
+                    throw new Error(text);
+                  });
+                }
+                return response.json();
+              })
+              .then((data) => {
+                if (data.success) {
+                  alert("Winners have been reset!");
+                } else {
+                  alert("Something went wrong. Please try again.");
+                }
+              })
+              .catch((error) => {
+                console.error("Error:", error);
                 alert("Something went wrong. Please try again.");
-              }
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-              alert("Something went wrong. Please try again.");
-            });
-        });
+              });
+          });
+      });
     </script>
   </body>
 </html>

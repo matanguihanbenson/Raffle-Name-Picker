@@ -586,6 +586,10 @@ video {
   display: flex;
 }
 
+.hidden {
+  display: none;
+}
+
 .h-\[300px\] {
   height: 300px;
 }
