@@ -5,15 +5,15 @@ const path = require('path');
 const app = express();
 
 // Serve static files (CSS, JS, etc.)
-app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // File path
-const filePath = path.join(__dirname, 'Naujan Academy Inc_Bulk_Group-Registration_IT-Congress - Lenny Francisco.xlsx');
+const filePath = path.join(__dirname, 'public', 'Naujan Academy Inc_Bulk_Group-Registration_IT-Congress - Lenny Francisco.xlsx');
 
 // Array to store already picked winners
 let pickedWinners = [];
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.get('/pick-winner', (req, res) => {
@@ -74,6 +74,5 @@ app.post('/reset-winners', (req, res) => {
     res.json({ success: true });
 });
 
-
+// Export for serverless environment
 module.exports = app;
-

@@ -10,8 +10,7 @@
       { "src": "/pick-winner", "dest": "server.js" },
       { "src": "/reset-winners", "dest": "server.js" },
       { "src": "/", "dest": "server.js" },
-      { "src": "/(.*)", "dest": "server.js" },
-      { "src": "/styles.css", "dest": "/styles.css" }
+      { "src": "/(.*)", "dest": "server.js" }
     ]
   }
   
