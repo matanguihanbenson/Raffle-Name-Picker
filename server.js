@@ -5,14 +5,13 @@ const path = require('path');
 const app = express();
 
 // Serve static files (CSS, JS, etc.)
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname));
 
 // File path
 const filePath = path.join(__dirname, 'Naujan Academy Inc_Bulk_Group-Registration_IT-Congress - Lenny Francisco.xlsx');
 
 // Array to store already picked winners
 let pickedWinners = [];
-
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
