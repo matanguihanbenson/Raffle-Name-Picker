@@ -4,16 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Raffle Name Picker</title>
-    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body class="flex items-center justify-center h-screen p-0 m-0">
     <div class="w-1/2">
       <h1>Raffle Name Picker</h1>
-      <div class="winner" id="winner"></div>
-      <button id="pickWinnerButton">Pick a Winner</button>
-      <button id="resetButton">Reset Winners</button>
+      <br>
+      <div class="h-[300px] relative text-center">
+        <div class="absolute w-full left-0 -top-3 text-center">
+          <strong class="w-1/2 bg-red-600 p-2">The winner is:</strong>
+        </div>
+        
+        <div class="winner bg-white p-10 " id="winner">
+          
+          
+          <div class="flicker" id="flicker"></div>
+        </div>
+        
+      </div>
+      <div>
+        <button id="pickWinnerButton" class="text-white">Pick a Winner</button>
+        <button id="resetButton" class="text-white ml-2">Reset Winners</button>
+      </div>
 
-      <div class="flicker" id="flicker"></div>
+      
     </div>
 
     <script>
@@ -56,14 +70,12 @@
               } else {
                 const finalWinner = data.winner;
                 console.log("Winner picked:", finalWinner);
-
                 // Display the winner's information
                 document.getElementById("winner").innerHTML = `
-                                <strong>The winner is:</strong><br>
-                                    <h1 class="text-white">${finalWinner["LAST NAME"]}, ${finalWinner["FIRST NAME"]} ${finalWinner["MIDDLE INITIAL"]}.</h1>
-                                    <h2 class="text-xl">${finalWinner["SCHOOL"]}</h2>
-                                    <h3 class="text-lg">${finalWinner["ADDRESS"]}</h3>
                                 
+<h1 class="text-black">${finalWinner["LAST NAME"]}, ${finalWinner["FIRST NAME"]} ${finalWinner["MIDDLE INITIAL"]}.</h1>
+          <h2 class="text-xl">${finalWinner["SCHOOL"]}</h2>
+          <h3 class="text-lg">${finalWinner["ADDRESS"]}</h3>                                
                             `;
 
                 // Hide the flickering element after the winner is displayed
