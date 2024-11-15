@@ -1,17 +1,19 @@
 {
   "dependencies": {
     "express": "^4.21.1",
+    "tailwindcss": "^3.4.15",
     "xlsx": "^0.18.5"
   },
   "name": "raffle",
   "version": "1.0.0",
   "main": "server.js",
-  "engines" : {
-    "node" : "20.x"
+  "engines": {
+    "node": "20.x"
   },
   "scripts": {
-    "start" : "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev" : "npx tailwindcss -i ./input.css -o ./styles.css --watch"
   },
   "keywords": [],
   "author": "",
