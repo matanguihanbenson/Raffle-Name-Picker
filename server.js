@@ -14,7 +14,7 @@ const filePath = path.join(__dirname, 'Naujan Academy Inc_Bulk_Group-Registratio
 let pickedWinners = [];
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.get('/pick-winner', (req, res) => {
