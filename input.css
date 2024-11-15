@@ -7,13 +7,11 @@ body {
   }
   
   .flicker {
-    font-size: 24px;
+    font-size: 40px;
     font-weight: bold;
-    height: 30px;
-    color: #333;
+    color: #fff;
     font-family: "Courier New", Courier, monospace;
     white-space: nowrap;
-    overflow: hidden;
     display: block;
   }
   
