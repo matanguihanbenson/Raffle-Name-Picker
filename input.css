@@ -6,6 +6,9 @@
 body {
     font-family: Inter;
     text-align: center;
+    background: url('img/bg.jpg');
+    background-size: cover;
+    backdrop-filter: blur(15px);
   }
   
   .flicker {
@@ -21,6 +24,10 @@ body {
     display: block;
     opacity: 0;
     animation: flicker 0.1s infinite;
+  }
+  .wrapper{
+    background: url('img/bg.jpg');
+    background-size: cover;
   }
   
   @keyframes flicker {
